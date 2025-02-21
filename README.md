@@ -65,3 +65,39 @@ TCP vs UDP
 - TCP is reliable, UDP is not
 - TCP is slower, UDP is faster
 - TCP is used for websites, UDP is used for video games
+
+### What is an HTTP Request and How Does it Work?
+
+HTTP protocol lives in the application layer. It is built on top of the TCP protocol. HTTP doesn't just pass HTML anymore. It can pass images, videos, and other types of data.
+
+HTTP is based on TCP which is part of the transport layer. Even though TCP/IP are used to help the computers find each other, if the request is initiated in HTTP, the computers both need to know how to speak HTTP.
+
+HTTP as a protocol is incredible efficient. TCP remains connected until all the data has been sent. HTTP does not have to stay open and only stays connected if required. Once the request arrives, the machines will disconnect from each other. As soon as the responder is ready, the HTTP connection will re-established across TCP and will send the response.
+
+HTTP is stateless which means there is no dialogue. The machines only know about each other for as long as the connection is open. As soon as the connection closes, everything is forgotten. If they need to talk again, they have to start completely over again.
+
+HTTP messages are usually all text. The start line is the first line of the message. It tells the server what to do. The headers are key value pairs that give the server more information about the request. The body is the actual data that is being sent.
+
+An HTTP message is made up of three parts:
+
+1. Start Line
+
+- Request Line
+
+  - Method
+  - Path
+  - Protocol Version
+
+- Response Line
+  -HTTP Version
+  - Status Code
+
+2. Headers: specifies the request or describes the body included in the message, basically metadata about the message
+
+- Key-Value Pairs
+  - Content-Type (MIME Type)
+  - Content-Length
+
+Theres always a blank line between the headers and the body to indicate the end of the headers.
+
+3. Body: the actual data that is being sent (HTML, JSON, etc.)
