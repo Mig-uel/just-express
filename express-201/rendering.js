@@ -22,6 +22,10 @@ function validateUser(req, res, next) {
   return next()
 }
 
+app.get('/about', (req, res) => {
+  return res.render('about')
+})
+
 app.get('/', validateUser, (req, res) => {
   /**
    * we define a view engine:
