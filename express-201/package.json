@@ -12,6 +12,6 @@
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon middlewares.js"
+    "dev": "nodemon rendering.js"
   }
 }
