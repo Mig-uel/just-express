@@ -1,6 +1,9 @@
 /**
- * http module is native to Node
+ * fs, http module is native to Node
+ *
+ * fs gives node access to THIS computers file system
  */
+const fs = require('fs/promises')
 const http = require('http')
 
 /**
@@ -16,7 +19,7 @@ const http = require('http')
  * 2. header (we will deal with it)
  * 3. body - (we write the body)
  */
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   const url = req.url
 
   /**
@@ -27,7 +30,21 @@ const server = http.createServer((req, res) => {
      * writeHead(): takes 2 args, status code and the object for the mime-type
      */
     res.writeHead(200, { 'content-type': 'text/html' })
-    res.write('<h1>This is the home page</h1>')
+
+    const homePageHTML = await fs.readFile('index.html')
+    res.write(homePageHTML)
+    res.end()
+  } else if (url === '/node.png') {
+    res.writeHead(200, { 'content-type': 'image/png' })
+
+    const image = await fs.readFile('node.png')
+    res.write(image)
+    res.end()
+  } else if (url === '/styles.css') {
+    res.writeHead(200, { 'content-type': 'text/css' })
+
+    const css = await fs.readFile('styles.css')
+    res.write(css)
     res.end()
   } else {
     res.writeHead(404, { 'content-type': 'text/html' })
