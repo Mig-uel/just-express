@@ -227,3 +227,8 @@ With Express, we will use `res.json` to send back JSON.
   - The server sends back data
   - The client can take this data and do whatever it wants with it
   - The server is responsible for sending back the response
+
+## View Engine
+
+A view engine allows us to render views. It allows us to render HTML, CSS, JavaScript, and more. It allows us to render dynamic content. It allows us to render data.
+
