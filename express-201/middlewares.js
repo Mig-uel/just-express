@@ -3,7 +3,16 @@ const helmet = require('helmet')
 
 const app = express()
 
-app.use(helmet())
+app.use(
+  helmet.default({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        'script-src': ["'nonce-2726c7f26c'"],
+      },
+    },
+  })
+)
 
 app.use(express.static('public'))
 
