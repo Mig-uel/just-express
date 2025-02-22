@@ -17,7 +17,12 @@ app.use(express.static('public')) // serve static files
 app.set('view engine', 'ejs')
 app.set('views', path.resolve(__dirname, 'views')) // can be passed multiple dirs
 
-app.get('/', (req, res) => {
+function validateUser(req, res, next) {
+  res.locals.validated = true
+  return next()
+}
+
+app.get('/', validateUser, (req, res) => {
   /**
    * we define a view engine:
    * ejs
@@ -32,8 +37,18 @@ app.get('/', (req, res) => {
    * express uses the node module for our specified view engine and parses the file
    *
    * the final result is a compile product of the things that browser can handle
+   *
+   * the data in the second arg is going to be appended to res.locals
+   *
+   * we are in the response therefore we can access res properties such as locals
    */
-  return res.render('index')
+  return res.render('index', {
+    msg: 'failure',
+    msg2: 'hello',
+
+    // html came from db and we want to pass it to the view engine
+    html: '<p>hey there</p>',
+  })
 })
 
 app.listen(3000, () => console.log('SERVER RUNNING'))
