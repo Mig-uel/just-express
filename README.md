@@ -110,3 +110,74 @@ Node.js is the language. Google Chrome's V8 JavaScript Engine is the runtime. Ex
 
 Node.js is written in C and reads or runs JavaScript. It is a runtime that allows you to run JavaScript on the server.
 
+## Brief Recap
+
+- Networking - HTTP, TCP/UDP
+
+  - TCP and IP work together to send packets back and forth between the client and the server
+  - TCP is connection based, UDP is connectionless
+  - TCP is stateless
+  - HTTP is a protocol that is built on top of TCP
+  - HTTP messages are made up of three parts: start line, headers, and body
+  - Request Line: Method, Path, Protocol Version (GET /index.html HTTP/1.1)
+  - Response Line: HTTP Version, Status Code (HTTP/1.1 200 OK)
+  - Headers: Key-Value Pairs (Content-Type: text/html)\
+  - Blank Line: between headers and body
+  - Body: the actual data that is being sent (HTML, JSON, etc.)
+
+- Node Server
+
+  - Node.js is a runtime that allows you to run JavaScript on the server
+  - Used the `http` module to create a server
+  - Wrote our headers and body in the response object
+  - Manually closed the connection
+  - Used the `listen` method to listen on a specific port
+  - The transport layer creates 2^16 ports that are used to send data back and forth between the client and the server
+  - The client sends a request to the server on a specific port
+  - The server sends a response back to the client on a specific port
+
+- Express
+
+  - Express is a Node.js module that is used for building web applications
+  - Express is a flexible Node.js web application framework that provides a robust set of features for web and mobile applications
+  - Express is middleware that sits between the client and the server
+  - Build our own router that routes requests to the correct handler
+  - Each route has a handler that sends back a response
+  - Handlers take in a request and response object
+  - Used the `listen` method to listen on a specific port
+  - Served static files using the `express.static` method
+
+- Express Middleware
+
+  - Middleware is a function that has access to the request object, the response object, and the next middleware function in the application's request-response cycle
+  - Middleware can execute any code, make changes to the request and the response objects, end the request-response cycle, and call the next middleware function in the stack
+  - Middleware can be application level, router level, error handling, or built-in
+  - Middleware can be used to log requests, authenticate users, parse the body of the request, and more
+  - Middleware can be used to serve static files, parse the body of the request, and more
+  - We use the `app.use` method to use middleware
+  - We use the `next` method to pass control to the next middleware function
+  - We used the `express.json` method to parse the body of the request when the `Content-Type` is `application/json`
+  - We used the `express.urlencoded` method to parse the body of the request when the `Content-Type` is `application/x-www-form-urlencoded`
+  - We used the `Helmet` middleware to secure our application by setting various HTTP headers
+
+- Request Object
+
+  - The request object is an instance of `http.IncomingMessage`
+  - The request object contains information about the request
+  - The request object contains the request method, the request URL, the request headers, the request body, and more
+  - The request object is passed to the request handler as the first argument
+  - We used the `req.ip` method to get the IP address of the client
+  - We used the `req.path` method to get the path of the request
+  - We used the `req.body` method to get the body of the request
+
+- Response Object
+
+  - The response object is an instance of `http.ServerResponse`
+  - The response object contains information about the response
+  - The response object contains the response headers, the response body, and more
+  - The response object is passed to the request handler as the second argument
+  - We used the `res.send` method to send a response back to the client
+  - We used the `res.sendFile` method to send a file back to the client
+  - We used the `res.locals` method to pass data from one middleware function to another
+  - We used the `res.json` method to send a JSON response back to the client
+  - We used the `res.status` method to set the status code of the response
