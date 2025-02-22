@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: false }))
 app.post('/ajax', (req, res) => {
   console.log(req)
 
-  res.send('TEST')
+  res.status(200).json({ message: 'TEST' })
 })
 
 app.listen(3000, () => console.log('SERVER RUNNING'))
