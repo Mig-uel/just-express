@@ -16,7 +16,17 @@ app.set('view engine', 'ejs')
 app.set('views', path.resolve(__dirname, 'views'))
 
 app.get('/login', (req, res) => {
-  return res.render('login')
+  /**
+   * req has a query property in express
+   * it contains properties for each key-value query
+   */
+  const {
+    query: { msg },
+  } = req
+
+  return res.render('login', {
+    msg: msg ?? '',
+  })
 })
 
 app.get('/', (req, res) => {
