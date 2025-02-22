@@ -101,3 +101,12 @@ An HTTP message is made up of three parts:
 Theres always a blank line between the headers and the body to indicate the end of the headers.
 
 3. Body: the actual data that is being sent (HTML, JSON, etc.)
+
+## Express 101
+
+Express is a Node.js module that is used for building web applications. It is a flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
+
+Node.js is the language. Google Chrome's V8 JavaScript Engine is the runtime. Express is the framework.
+
+Node.js is written in C and reads or runs JavaScript. It is a runtime that allows you to run JavaScript on the server.
+
