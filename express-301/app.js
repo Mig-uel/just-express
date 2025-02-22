@@ -85,4 +85,26 @@ app.get('/logout', (req, res) => {
   return res.redirect('/login')
 })
 
+/**
+ * app.params(): takes 2 args
+ * param to look for in the route
+ * the callback to run
+ */
+app.param('id', (req, res, next, id) => {
+  /**
+   * useful for checking the param
+   * storyId vs. blogId
+   */
+  console.log(id)
+
+  return next()
+})
+
+app.get('/story/:id', (req, res) => {
+  /**
+   * req.params is an object that will have a property for every params
+   */
+  return res.send(`STORY ${req.params.id}`)
+})
+
 app.listen(3000, () => console.log('SERVER RUNNING'))
