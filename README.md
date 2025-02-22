@@ -181,3 +181,49 @@ Node.js is written in C and reads or runs JavaScript. It is a runtime that allow
   - We used the `res.locals` method to pass data from one middleware function to another
   - We used the `res.json` method to send a JSON response back to the client
   - We used the `res.status` method to set the status code of the response
+
+## Choose Your Weapon: API vs. Server Side Rendering
+
+### The Server
+
+- **OS**: Windows, Mac, Linux, Unix, etc.
+- **Server**: Apache, Nginx, IIS, Node, WebSphere, TomCat, etc.
+- **Database**: MySQL, PostgreSQL, MongoDB, etc.
+- **Programming Layer**: PHP, Ruby, Python, Java, .NET, Node, etc.
+- **Frontend**: HTML, CSS, JavaScript, etc.
+
+These pieces make up the server. The server is responsible for serving up the website. It is responsible for taking the request and sending back the response.
+
+What can come back is HTML, CSS, JavaScript, images, videos, etc. The server processes the request and sends back the response.
+
+The programming language and the database work together to create the website. It is given to the server and the server sends it back to the client.
+
+With Express, we will use `res.render` to render a view. We will use a templating engine like EJS to render the view. This is server side rendering.
+
+### The API
+
+Instead of sending back HTML, we can send back JSON. We can send back data. We can send back an object. We can send back an array. We can send back a string. We can send back anything.
+
+The client can take this data and do whatever it wants with it. It can render it on the page. It can save it to a database. It can send it to another server. It can do whatever it wants with it.
+
+We are still responsible for processing the request and sending back the response. We are just sending back data instead of HTML.
+
+With Express, we will use `res.json` to send back JSON.
+
+### Server Side Rendering vs. API
+
+- **Server Side Rendering**
+
+  - The server processes the request and sends back the response
+  - The server sends back HTML, CSS, JavaScript, images, videos, etc.
+  - The server is responsible for creating the website
+  - The server is responsible for rendering the view
+  - The server is responsible for sending back the response
+  - Can make use of session management, cookies, and more
+
+- **API**
+
+  - The server processes the request and sends back the response
+  - The server sends back data
+  - The client can take this data and do whatever it wants with it
+  - The server is responsible for sending back the response
