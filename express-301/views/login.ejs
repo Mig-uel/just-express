@@ -5,6 +5,9 @@
       <input type="text" placeholder="username" name="username" />
       <input type="password" placeholder="password" name="password" />
       <button>login</button>
+      <% if (msg === 'fail') {%>
+      <p class="error">Invalid username or password</p>
+      <% } %>
       <p class="message">Not registered? <a href="#">Create an account</a></p>
     </form>
   </div>
