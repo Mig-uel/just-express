@@ -17,12 +17,23 @@ const http = require('http')
  * 3. body - (we write the body)
  */
 const server = http.createServer((req, res) => {
+  const url = req.url
+
   /**
-   * writeHead(): takes 2 args, status code and the object for the mime-type
+   * if the user wants the homepage (req.url is '/')
    */
-  res.writeHead(200, { 'content-type': 'text/html' })
-  res.write('<h1>This is the home page</h1>')
-  res.end()
+  if (url === '/') {
+    /**
+     * writeHead(): takes 2 args, status code and the object for the mime-type
+     */
+    res.writeHead(200, { 'content-type': 'text/html' })
+    res.write('<h1>This is the home page</h1>')
+    res.end()
+  } else {
+    res.writeHead(404, { 'content-type': 'text/html' })
+    res.write("<h4>Sorry, this isn't the page you're looking for!</h4>")
+    res.end()
+  }
 })
 
 /**
