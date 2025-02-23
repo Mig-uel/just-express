@@ -126,7 +126,7 @@ app.get('/statement', (req, res) => {
    */
 
   return res.download(
-    path.resolve(__dirname, 'statements', 'statements.png'),
+    path.resolve(__dirname, 'statements', 'statement.png'),
     `${date}-statement.png`,
     (err) => {
       // if there is an error in sending the file, headers may already be sent
