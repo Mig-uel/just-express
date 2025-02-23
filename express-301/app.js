@@ -141,4 +141,8 @@ app.get('/statement', (req, res) => {
   )
 })
 
+app.get('/download/error', (req, res) => {
+  return res.send('THERE WAS AN ERROR DOWNLOADING YOUR FILE')
+})
+
 app.listen(3000, () => console.log('SERVER RUNNING'))
