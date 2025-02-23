@@ -108,19 +108,36 @@ app.get('/story/:id', (req, res) => {
 })
 
 app.get('/statement', (req, res) => {
+  const date = new Date().toISOString()
+
   /**
-   * download method takes 2 args:
+   * download method takes 3 args:
    * filename
    * what you want the filename to download as
+   * callback for the error
    *
    * download method is setting the headers for us
    * res.set('Content-Disposition', 'attachment')
    * res.sendFile(xxxx)
+   *
+   * res.attachment only sets the headers for content-disposition to attachment
+   * IF, you provide a file, it will also set the filename
+   * res.attachment(xxxx, 'FILENAME.XXX')
    */
-  const date = new Date().toISOString()
+
   return res.download(
-    path.resolve(__dirname, 'statements', 'statement.png'),
-    `${date}-statement.png`
+    path.resolve(__dirname, 'statements', 'statements.png'),
+    `${date}-statement.png`,
+    (err) => {
+      // if there is an error in sending the file, headers may already be sent
+
+      if (err) {
+        // res.headers is a bool, true if headers are already sent
+        if (!res.headersSent) {
+          return res.redirect('/download/error')
+        }
+      }
+    }
   )
 })
 
