@@ -107,4 +107,21 @@ app.get('/story/:id', (req, res) => {
   return res.send(`STORY ${req.params.id}`)
 })
 
+app.get('/statement', (req, res) => {
+  /**
+   * download method takes 2 args:
+   * filename
+   * what you want the filename to download as
+   *
+   * download method is setting the headers for us
+   * res.set('Content-Disposition', 'attachment')
+   * res.sendFile(xxxx)
+   */
+  const date = new Date().toISOString()
+  return res.download(
+    path.resolve(__dirname, 'statements', 'statement.png'),
+    `${date}-statement.png`
+  )
+})
+
 app.listen(3000, () => console.log('SERVER RUNNING'))
