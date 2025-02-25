@@ -15,8 +15,6 @@ app.use(express.urlencoded({ extended: false }))
 app.use((req, res, next) => {
   const { api_key } = req.query
 
-  console.log(api_key)
-
   if (!api_key || api_key.length < 6) {
     return res.status(401).json({ msg: 'Invalid API Key!' })
   }
