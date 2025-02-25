@@ -49,7 +49,48 @@ app.get('/', async (req, res) => {
 
   return res.render('index', {
     movies: data.results,
+    found: data.results.length,
   })
+})
+
+app.post('/search', async (req, res) => {
+  const { type, search } = req.body
+
+  if (type === 'movie') {
+    const response = await fetch(
+      `${BASE_URL}/search/movie?query=${encodeURI(search)}`,
+      {
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${API_KEY}`,
+        },
+      }
+    )
+    const data = await response.json()
+
+    return res.render('index', {
+      movies: data.results ?? [],
+      found: data.results.length,
+    })
+  } else if (type === 'person') {
+    const response = await fetch(
+      `${BASE_URL}/search/person?query=${encodeURI(search)}`,
+      {
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${API_KEY}`,
+        },
+      }
+    )
+    const data = await response.json()
+
+    return res.render('index', {
+      movies: data.results.length ? data.results[0].known_for : [],
+      found: data.results.length,
+    })
+  }
+
+  return res.redirect(404, '/')
 })
 
 app.use((err, req, res, next) => {
