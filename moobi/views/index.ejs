@@ -13,10 +13,16 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
+        <% if (found) {  %>
         <h1>Now Playing</h1>
+        <% } else {%>
+        <h1>Search Results</h1>
+        <% } %>
       </div>
       <div class="col-sm-12">
-        <!--  -->
+        <% if (!found) {  %>
+        <p>No results found</p>
+        <% } %>
         <% movies.forEach(movie => { %>
         <div class="col-md-3 col-sm-4 poster">
           <a href="/movie/<%= movie.id %>">
