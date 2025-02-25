@@ -1,13 +1,13 @@
+var path = require('path')
 var createError = require('http-errors')
 var express = require('express')
-var path = require('path')
 var cookieParser = require('cookie-parser')
 
 const indexRouter = require('./routes')
 const movieRouter = require('./routes/movie')
 const searchRouter = require('./routes/search')
 
-var app = express()
+const app = express()
 
 app.use(cookieParser())
 app.use(express.json())
