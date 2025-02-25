@@ -3,7 +3,7 @@ const movieDetails = require('../data/movieDetails')
 
 router.param('id', (req, res, next, id) => {
   // update the db with analytics data
-  console.log('MOVIE ID ROUTE HIT:' + id)
+  if (req.method === 'GET') console.log('MOVIE ID ROUTE HIT:' + id)
   return next()
 })
 
