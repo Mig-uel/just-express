@@ -22,6 +22,22 @@ app.use((req, res, next) => {
   return next()
 })
 
+app.get('/movie/:id', async (req, res) => {
+  const { id } = req.params
+
+  const response = await fetch(`${BASE_URL}/movie/${id}`, {
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${API_KEY}`,
+    },
+  })
+  const data = await response.json()
+
+  return res.render('single-movie', {
+    movie: data,
+  })
+})
+
 app.get('/', async (req, res) => {
   const response = await fetch(NOW_PLAYING_URL, {
     headers: {
