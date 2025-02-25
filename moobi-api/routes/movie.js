@@ -46,4 +46,18 @@ router.get('/:id', function (req, res) {
   return res.json({ results })
 })
 
+router.post('/:id/rating', requireJSON, (req, res) => {
+  const { id } = req.params
+  const { user_rating } = req.body
+
+  if (isNaN(user_rating)) return res.status(400).json({ msg: 'Invalid rating' })
+
+  if (user_rating < 0.5 || user_rating > 10)
+    return res.status(400).json({ msg: 'Rating must be between .5 and 10' })
+
+  return res
+    .status(201)
+    .json({ id, msg: 'Thank you for submitting your rating.' })
+})
+
 module.exports = router
