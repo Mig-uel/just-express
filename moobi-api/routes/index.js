@@ -7,14 +7,10 @@ router.get('/', function (req, res) {
 })
 
 router.get('/most_popular', (req, res) => {
-  const { api_key, page = 1 } = req.query
+  const { page = 1 } = req.query
   const limit = 20
   const start = (page - 1) * limit
   const end = start + 19
-
-  if (!api_key || api_key.length < 6) {
-    return res.status(401).json({ msg: 'Invalid API Key!' })
-  }
 
   const results = movies.filter((movie) => movie.most_popular).slice(start, end)
   const total = results.length
