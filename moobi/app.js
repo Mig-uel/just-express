@@ -1,5 +1,8 @@
 const helmet = require('helmet')
 const express = require('express')
+const passport = require('passport')
+const { Strategy } = require('passport-github2')
+require('dotenv').config()
 require('express-async-errors')
 
 const app = express()
@@ -13,6 +16,20 @@ app.set('view engine', 'ejs')
 app.set('views', 'views')
 
 // app.use(helmet())
+
+passport.use(
+  new Strategy(
+    {
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: 'http://localhost:3000/auth/github/callback',
+    },
+    function (accessToken, refreshToken, profile, done) {
+      console.log(profile)
+    }
+  )
+)
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
@@ -92,6 +109,8 @@ app.post('/search', async (req, res) => {
 
   return res.redirect(404, '/')
 })
+
+app.get('/login', passport.authenticate('github'))
 
 app.use((err, req, res, next) => {
   if (err.message === 'access denied') {
