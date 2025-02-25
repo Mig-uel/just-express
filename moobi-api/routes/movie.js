@@ -13,7 +13,8 @@ router.param('id', (req, res, next, id) => {
   // if (req.method === 'GET') console.log('MOVIE ID ROUTE HIT:' + id)
 
   // check id to see if its not a number
-  if (isNaN(id)) return res.status(400).json({ msg: 'Provided movie ID is invalid!' })
+  if (isNaN(id))
+    return res.status(400).json({ msg: 'Provided movie ID is invalid!' })
 
   return next()
 })
@@ -58,6 +59,12 @@ router.post('/:id/rating', requireJSON, (req, res) => {
   return res
     .status(201)
     .json({ id, msg: 'Thank you for submitting your rating.' })
+})
+
+router.delete('/:id/rating', requireJSON, (req, res) => {
+  const { id } = req.params
+
+  return res.status(200).json({ id, msg: 'Rating deleted' })
 })
 
 module.exports = router
