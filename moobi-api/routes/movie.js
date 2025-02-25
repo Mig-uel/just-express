@@ -10,7 +10,11 @@ function requireJSON(req, res, next) {
 
 router.param('id', (req, res, next, id) => {
   // update the db with analytics data
-  if (req.method === 'GET') console.log('MOVIE ID ROUTE HIT:' + id)
+  // if (req.method === 'GET') console.log('MOVIE ID ROUTE HIT:' + id)
+
+  // check id to see if its not a number
+  if (isNaN(id)) return res.status(400).json({ msg: 'Provided movie ID is invalid!' })
+
   return next()
 })
 
@@ -31,8 +35,6 @@ router.get('/top_rated', (req, res) => {
 
 router.get('/:id', function (req, res) {
   const { id } = req.params
-
-  if (isNaN(id)) return res.status(500).json({ msg: 'Provided ID is invalid!' })
 
   const results = movieDetails.find((movie) => movie.id == id)
 
