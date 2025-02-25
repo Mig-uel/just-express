@@ -1,7 +1,11 @@
 const helmet = require('helmet')
 const express = require('express')
+/** Passport Dependencies */
 const passport = require('passport')
 const { Strategy } = require('passport-github2')
+const session = require('express-session')
+const cookieParser = require('cookie-parser')
+/* ---------------------------------------------------------- */
 require('dotenv').config()
 require('express-async-errors')
 
@@ -15,8 +19,22 @@ const API_KEY =
 app.set('view engine', 'ejs')
 app.set('views', 'views')
 
-// app.use(helmet())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public'))
+app.use(cookieParser())
 
+/** Passport Dependencies */
+app.use(
+  session({
+    secret: 'moobi',
+    resave: false,
+    saveUninitialized: true,
+  })
+)
+app.use(passport.authenticate('session'))
+passport.initialize()
+passport.session()
 passport.use(
   new Strategy(
     {
@@ -24,15 +42,23 @@ passport.use(
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: 'http://localhost:3000/auth/github/callback',
     },
+
     function (accessToken, refreshToken, profile, done) {
-      console.log(profile)
+      return done(null, profile)
     }
   )
 )
-
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public'))
+passport.serializeUser((user, done) => {
+  process.nextTick(function () {
+    return done(null, user)
+  })
+})
+passport.deserializeUser((user, done) => {
+  process.nextTick(function () {
+    return done(null, user)
+  })
+})
+/* ---------------------------------------------------------- */
 
 app.use((req, res, next) => {
   res.locals.imageBase = IMAGE_BASE_URL
@@ -56,6 +82,7 @@ app.get('/movie/:id', async (req, res) => {
 })
 
 app.get('/', async (req, res) => {
+  console.log(req.user)
   const response = await fetch(NOW_PLAYING_URL, {
     headers: {
       accept: 'application/json',
@@ -110,7 +137,16 @@ app.post('/search', async (req, res) => {
   return res.redirect(404, '/')
 })
 
-app.get('/login', passport.authenticate('github'))
+app.get('/login', passport.authenticate('github', { session: true }))
+
+app.get(
+  '/auth/github/callback',
+  passport.authenticate('github', {
+    successRedirect: '/',
+    failureRedirect: '/error',
+    session: true,
+  })
+)
 
 app.use((err, req, res, next) => {
   if (err.message === 'access denied') {
