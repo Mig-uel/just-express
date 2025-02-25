@@ -1,6 +1,13 @@
 const router = require('express').Router()
 const movieDetails = require('../data/movieDetails')
 
+function requireJSON(req, res, next) {
+  if (!req.is('application/json'))
+    return res.status(400).json({ msg: 'Invalid Content-Type' })
+
+  return next()
+}
+
 router.param('id', (req, res, next, id) => {
   // update the db with analytics data
   if (req.method === 'GET') console.log('MOVIE ID ROUTE HIT:' + id)
