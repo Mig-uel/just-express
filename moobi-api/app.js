@@ -3,9 +3,9 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 
-var indexRouter = require('./routes/index')
-const movieRouter = require('/routes/movieRouter')
-const searchRouter = require('/routes/searchRouter')
+const indexRouter = require('./routes')
+const movieRouter = require('./routes/movie')
+const searchRouter = require('./routes/search')
 
 var app = express()
 
