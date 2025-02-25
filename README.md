@@ -232,3 +232,30 @@ With Express, we will use `res.json` to send back JSON.
 
 A view engine allows us to render views. It allows us to render HTML, CSS, JavaScript, and more. It allows us to render dynamic content. It allows us to render data.
 
+## Brief Recap (Part 2)
+
+`express.Router()`: A router object is an isolated instance of middleware and routes. You can think of it as a “mini-application,” capable only of performing middleware and routing functions. Every Express application has a built-in app router.
+
+`app.param()`: Bind callback functions to parameters. Parameter middleware is executed when a parameter is present in a route path.
+
+`app.set()`: Assigns setting name to value. You may store any value that you want, but certain names can be used to configure the behavior of the server.
+
+`req.cookies`: An object that contains cookies sent by the request.
+
+`req.query`: An object containing a property for each query string parameter in the route. If there is no query string, it is an empty object.
+
+`res.cookie()`: Sets a cookie with the name, value, and options.
+
+`res.clearCookie()`: Clears the cookie specified by name.
+
+`res.render()`: Renders a view and sends the rendered HTML string to the client.
+
+`res.redirect()`: Redirects the request to a specified URL.
+
+`router.all()`: This method is just like the standard router.METHOD() methods, except it matches all HTTP methods (verbs).
+
+`router.route()`: Returns an instance of a single route, which you can then use to handle HTTP verbs with optional middleware.
+
+`res.headersSent`: Boolean property that indicates if the headers have been sent to the client.
+
+`res.locals`: An object that contains response local variables scoped to the request, and therefore available only to the view(s) rendered during that request/response cycle (if any).
