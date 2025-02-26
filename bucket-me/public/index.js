@@ -1,5 +1,12 @@
-function updateProgressBar(e) {
+const updateProgressBar = (e) => {
   console.log(e)
+  const progressDone = e.progress
+  const barWidth = Math.floor(progressDone * 100)
+  const barStyle = `${barWidth}%`
+  document.querySelector('.progress-bar').style.width = barStyle
+  document
+    .querySelector('.progress-bar')
+    .setAttribute('aria-valuenow', barWidth)
 }
 
 async function addFile(e) {
@@ -37,27 +44,52 @@ async function addFile(e) {
   document.getElementById('progress-wrapper').style.display = 'block'
 
   // 3. try and upload the file to s3
-  try {
-    const config = {}
+  const awsFinalRes = await new Promise(async (resolve, reject) => {
+    try {
+      const config = {}
 
-    // content-type much match what express told s3
-    config.headers = {
-      'content-type': data.mimeType,
+      // content-type much match what express told s3
+      config.headers = {
+        'content-type': data.mimeType,
+      }
+
+      config.onUploadProgress = (e) => updateProgressBar(e)
+
+      // aws is expecting a PUT method
+      const awsRes = await fetch(data.signedLink, {
+        method: 'PUT',
+        ...config,
+        body: file,
+      })
+
+      if (!awsRes.ok) throw new Error('Something went wrong...')
+
+      resolve(awsRes)
+    } catch (error) {
+      console.log(error)
+      reject(error)
     }
+  })
 
-    config.onUploadProgress = (e) => updateProgressBar(e)
-
-    // aws is expecting a PUT method
-    const awsRes = await fetch(data.signedLink, {
-      method: 'PUT',
-      ...config,
-      body: file,
-    })
-    const awsData = await awsRes.json()
-    console.log(awsData)
-  } catch (error) {
-    console.log(error)
+  // 4. aws did not err, so let express know what happened
+  const finalUrlToExpress = `http://localhost:3000/finalize-upload`
+  const finalData = {
+    key: data.uniqueFileName,
   }
+
+  const finalRes = await fetch(finalUrlToExpress, {
+    method: 'POST',
+    body: JSON.stringify(finalData),
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+
+  const imageLink = await finalRes.json()
+
+  document.getElementById(
+    'current-image'
+  ).innerHTML = `<img src="${imageLink.signedLink}" width="100%" />`
 }
 
 document.getElementById('file-form').addEventListener('submit', addFile)
