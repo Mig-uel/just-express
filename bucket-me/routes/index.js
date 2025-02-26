@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const mime = require('mime-types')
+const getS3Link = require('../helpers/getS3Link')
 const getS3SignedLink = require('../helpers/getS3SignedURL')
 
 /**
@@ -28,6 +29,17 @@ router.post('/get-signed-url', async (req, res) => {
     mimeType,
     uniqueFileName,
   })
+})
+
+router.post('/finalize-upload', (req, res) => {
+  const { key } = req.body
+
+  // do all the stuff in here that needs to happen once express
+  // knows that the upload was successful
+
+  const signedLink = getS3Link(key)
+
+  return res.json({ signedLink })
 })
 
 module.exports = router
