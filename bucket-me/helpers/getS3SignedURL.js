@@ -2,6 +2,7 @@
 // it is signed and validated based on params we set here
 
 const aws = require('aws-sdk')
+require('dotenv').config()
 
 // configure aws module
 const config = {
