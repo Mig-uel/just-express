@@ -6,7 +6,7 @@ require('dotenv').config()
 
 // configure aws module
 const config = {
-  accessKey: process.env.ACCESS_KEY,
+  accessKeyId: process.env.ACCESS_KEY,
   secretAccessKey: process.env.SECRET_ACCESS_KEY,
   bucket: process.env.BUCKET,
   region: process.env.REGION,
